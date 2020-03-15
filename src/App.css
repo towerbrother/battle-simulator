@@ -15,6 +15,7 @@
 
 .players-field {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   text-align: center;
   max-width: 60%;
@@ -58,4 +59,86 @@ i::before {
 p {
   font-size: 32px;
   font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .players-field {
+    max-width: 60%;
+  }
+
+  .button-attack {
+    width: 7rem;
+    font-size: 24px;
+  }
+
+  .button-reset {
+    width: 7rem;
+    font-size: 24px;
+  }
+
+  .player-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .monster-container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  i,
+  i::before {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 450px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .players-field {
+    max-width: 70%;
+  }
+
+  .button-attack {
+    width: 5rem;
+    font-size: 20px;
+  }
+
+  .button-reset {
+    width: 5rem;
+    font-size: 20px;
+  }
+
+  .player-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .monster-container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  i,
+  i::before {
+    font-size: 2.2rem;
+  }
+
+  p {
+    font-size: 12px;
+  }
 }
