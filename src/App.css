@@ -27,6 +27,15 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin: 0 15px;
+}
+
+.dice-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .button-attack {
@@ -61,13 +70,49 @@ p {
   font-weight: bold;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+  .title {
+    font-size: 48px;
+  }
+
+  .button-attack {
+    width: 8rem;
+    font-size: 30px;
+  }
+
+  .button-reset {
+    width: 8rem;
+    font-size: 30px;
+  }
+
+  .dice-wrapper {
+    flex-direction: column;
+  }
+
+  .player-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .monster-container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  p {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1000px) {
   .title {
     font-size: 32px;
   }
 
-  .players-field {
-    max-width: 60%;
+  .dice-wrapper {
+    flex-direction: column;
   }
 
   .button-attack {
@@ -94,11 +139,17 @@ p {
 
   i,
   i::before {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   p {
     font-size: 18px;
+  }
+}
+
+@media (max-width: 750px) {
+  p {
+    font-size: 14px;
   }
 }
 
@@ -111,6 +162,10 @@ p {
     max-width: 70%;
   }
 
+  .dice-wrapper {
+    flex-direction: column;
+  }
+
   .button-attack {
     width: 5rem;
     font-size: 20px;
@@ -135,10 +190,16 @@ p {
 
   i,
   i::before {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
 
   p {
     font-size: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .players-field {
+    max-width: 90%;
   }
 }

@@ -1,23 +1,19 @@
 import React from "react";
+import One from "./dice-six-faces-one.png";
+import Two from "./dice-six-faces-two.png";
+import Three from "./dice-six-faces-three.png";
+import Four from "./dice-six-faces-four.png";
+import Five from "./dice-six-faces-five.png";
+import Six from "./dice-six-faces-six.png";
+import "./Dice.css";
 
-const diceList = [
-  "",
-  "dice-six-faces-one",
-  "dice-six-faces-two",
-  "dice-six-faces-three",
-  "dice-six-faces-four",
-  "dice-six-faces-five",
-  "dice-six-faces-six"
-];
+const diceList = ["", One, Two, Three, Four, Five, Six];
 
-const Dice = ({ number, name }) => {
-  return (
-    <>
-      <img
-        alt="dice"
-        src={`https://game-icons.net/icons/ffffff/000000/1x1/delapouite/${diceList[number]}.svg`}
-      ></img>
-    </>
+const Dice = ({ number, name, display }) => {
+  return !display ? (
+    <img alt="dice" src={diceList[number]} id={name}></img>
+  ) : (
+    <></>
   );
 };
 
