@@ -30,14 +30,6 @@
   margin: 0 15px;
 }
 
-.dice-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 10px;
-}
-
 .button-attack {
   margin: 0;
   width: 15rem;
@@ -60,11 +52,6 @@
   cursor: pointer;
 }
 
-i,
-i::before {
-  font-size: 5rem;
-}
-
 p {
   font-size: 32px;
   font-weight: bold;
@@ -85,22 +72,6 @@ p {
     font-size: 30px;
   }
 
-  .dice-wrapper {
-    flex-direction: column;
-  }
-
-  .player-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .monster-container {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-  }
-
   p {
     font-size: 24px;
   }
@@ -111,10 +82,6 @@ p {
     font-size: 32px;
   }
 
-  .dice-wrapper {
-    flex-direction: column;
-  }
-
   .button-attack {
     width: 7rem;
     font-size: 24px;
@@ -123,23 +90,6 @@ p {
   .button-reset {
     width: 7rem;
     font-size: 24px;
-  }
-
-  .player-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .monster-container {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-  }
-
-  i,
-  i::before {
-    font-size: 2.5rem;
   }
 
   p {
@@ -162,10 +112,6 @@ p {
     max-width: 70%;
   }
 
-  .dice-wrapper {
-    flex-direction: column;
-  }
-
   .button-attack {
     width: 5rem;
     font-size: 20px;
@@ -174,23 +120,6 @@ p {
   .button-reset {
     width: 5rem;
     font-size: 20px;
-  }
-
-  .player-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .monster-container {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-  }
-
-  i,
-  i::before {
-    font-size: 2rem;
   }
 
   p {
