@@ -1,6 +1,5 @@
 import React from "react";
-import Dice from "./components/Dice/Dice";
-import Health from "./components/Health/Health";
+import Players from "./components/Players/Players";
 import "font-awesome/css/font-awesome.min.css";
 import "./App.css";
 
@@ -9,12 +8,14 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      playerIcon: "fa fa-male",
+      monsterIcon: "fa fa-optin-monster",
       playerHealth: 100,
       monsterHealth: 100,
       playerDice: [null, null],
       monsterDice: [null, null],
       battleMessage: "Press Attack! to start",
-      battleEnded: false,
+      end: false,
       start: true,
       endBattleMessage: ""
     };
@@ -26,7 +27,7 @@ class App extends React.Component {
         playerDice: [null, null],
         monsterDice: [null, null],
         battleMessage: "Press Attack! to start",
-        battleEnded: false,
+        end: false,
         start: true,
         endBattleMessage: ""
       });
@@ -55,7 +56,7 @@ class App extends React.Component {
 
     this.produceMessage = (playerHit, monsterHit) => {
       if (this.state.playerHealth <= 0 || this.state.monsterHealth <= 0) {
-        this.setState({ battleMessage: "", battleEnded: true });
+        this.setState({ battleMessage: "", end: true });
         this.produceEndBattleMessage();
         return;
       } else if (monsterHit === playerHit) {
@@ -92,22 +93,15 @@ class App extends React.Component {
       <div className="App">
         <h1 className="title">Battle Simulator</h1>
         <div className="players-field">
-          <div id="wrapper" className="player-container">
-            <i className="fa fa-male"></i>
-            <Health name="Player" value={this.state.playerHealth} />
-            <div className="dice-wrapper">
-              {this.state.playerDice.map((number, name) => (
-                <Dice
-                  key={`player-${name}`}
-                  number={number}
-                  name={`player-${name}`}
-                  display={this.state.start}
-                />
-              ))}
-            </div>
-          </div>
+          <Players
+            name="player"
+            icon={this.state.playerIcon}
+            health={this.state.playerHealth}
+            dice={this.state.playerDice}
+            start={this.state.start}
+          />
           <div className="battle-container">
-            {this.state.battleEnded ? (
+            {this.state.end ? (
               <>
                 <div className="messages">
                   <p>{this.state.endBattleMessage}</p>
@@ -135,20 +129,13 @@ class App extends React.Component {
               </>
             )}
           </div>
-          <div id="wrapper" className="monster-container">
-            <i className="fa fa-optin-monster"></i>
-            <Health name="Monster" value={this.state.monsterHealth} />
-            <div className="dice-wrapper">
-              {this.state.monsterDice.map((number, name) => (
-                <Dice
-                  key={`monster-${name}`}
-                  number={number}
-                  name={`monster-${name}`}
-                  display={this.state.start}
-                />
-              ))}
-            </div>
-          </div>
+          <Players
+            name="monster"
+            icon={this.state.monsterIcon}
+            health={this.state.monsterHealth}
+            dice={this.state.monsterDice}
+            start={this.state.start}
+          />
         </div>
       </div>
     );
