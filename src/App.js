@@ -12,79 +12,83 @@ class App extends React.Component {
       monsterIcon: "fa fa-optin-monster",
       playerHealth: 100,
       monsterHealth: 100,
+      playerHit: null,
+      monsterHit: null,
       playerDice: [null, null],
       monsterDice: [null, null],
-      battleMessage: "Press Attack! to start",
-      end: false,
+      message: "Press Attack! to start",
       start: true,
-      endBattleMessage: ""
+      end: false
     };
 
     this.resetState = () => {
       this.setState({
         playerHealth: 100,
         monsterHealth: 100,
+        playerHit: null,
+        monsterHit: null,
         playerDice: [null, null],
         monsterDice: [null, null],
-        battleMessage: "Press Attack! to start",
-        end: false,
+        message: "Press Attack! to start",
         start: true,
-        endBattleMessage: ""
+        end: false
       });
     };
 
-    this.rollDice = () => {
+    this.randomDice = () => {
       return Math.floor(Math.random() * 6) + 1;
     };
 
-    this.updateState = (winner, hit) => {
-      winner === "monster"
+    this.updateMessage = () => {
+      if (this.state.playerHealth <= 0 || this.state.monsterHealth <= 0) {
+        this.state.playerHealth <= 0
+          ? this.setState({ end: true, message: "GAME OVER" })
+          : this.setState({ end: true, message: "YOU WIN" });
+      } else {
+        this.state.monsterHit > this.state.playerHit
+          ? this.setState({
+              message: `Monster hit you by ${this.state.monsterHit -
+                this.state.playerHit}`
+            })
+          : this.state.monsterHit < this.state.playerHit
+          ? this.setState({
+              message: `You hit monster by ${this.state.playerHit -
+                this.state.monsterHit}`
+            })
+          : this.setState({ message: "Draw" });
+      }
+    };
+
+    this.updateHealth = () => {
+      this.state.monsterHit >= this.state.playerHit
         ? this.setState({
-            playerHealth: this.state.playerHealth - hit
+            playerHealth:
+              this.state.playerHealth -
+              (this.state.monsterHit - this.state.playerHit)
           })
         : this.setState({
-            monsterHealth: this.state.monsterHealth - hit
+            monsterHealth:
+              this.state.monsterHealth -
+              (this.state.playerHit - this.state.monsterHit)
           });
-    };
-
-    this.produceEndBattleMessage = () => {
-      this.setState({ start: true });
-      this.state.playerHealth <= 0
-        ? this.setState({ endBattleMessage: "GAME OVER" })
-        : this.setState({ endBattleMessage: "YOU WIN" });
-    };
-
-    this.produceMessage = (playerHit, monsterHit) => {
-      if (this.state.playerHealth <= 0 || this.state.monsterHealth <= 0) {
-        this.setState({ battleMessage: "", end: true });
-        this.produceEndBattleMessage();
-        return;
-      } else if (monsterHit === playerHit) {
-        this.setState({ battleMessage: "Draw" });
-      } else if (monsterHit > playerHit) {
-        this.updateState("monster", monsterHit - playerHit);
-        this.setState({
-          battleMessage: `Monster hit you by ${monsterHit - playerHit}`
-        });
-      } else {
-        this.updateState("player", playerHit - monsterHit);
-        this.setState({
-          battleMessage: `You hit monster by ${playerHit - monsterHit}`
-        });
-      }
+      this.updateMessage();
     };
 
     this.calculateHit = () => {
       this.setState({
-        start: false,
-        playerDice: [this.rollDice(), this.rollDice()],
-        monsterDice: [this.rollDice(), this.rollDice()]
+        playerHit: this.state.playerDice.reduce((a, b) => a + b),
+        monsterHit: this.state.monsterDice.reduce((a, b) => a + b)
       });
+      this.updateHealth();
+    };
 
-      const monsterHit = this.state.monsterDice.reduce((a, b) => a + b);
-      const playerHit = this.state.playerDice.reduce((a, b) => a + b);
-
-      this.produceMessage(playerHit, monsterHit);
+    this.rollDice = () => {
+      this.setState({
+        start: false,
+        playerDice: [this.randomDice(), this.randomDice()],
+        monsterDice: [this.randomDice(), this.randomDice()]
+      });
+      this.calculateHit();
     };
   }
 
@@ -101,11 +105,11 @@ class App extends React.Component {
             start={this.state.start}
           />
           <div className="battle-container">
+            <div className="message">
+              <p>{this.state.message}</p>
+            </div>
             {this.state.end ? (
               <>
-                <div className="messages">
-                  <p>{this.state.endBattleMessage}</p>
-                </div>
                 <button
                   className="button-reset"
                   type="button"
@@ -116,13 +120,10 @@ class App extends React.Component {
               </>
             ) : (
               <>
-                <div className="messages">
-                  <p>{this.state.battleMessage}</p>
-                </div>
                 <button
                   className="button-attack"
                   type="button"
-                  onClick={this.calculateHit}
+                  onClick={this.rollDice}
                 >
                   Attack!
                 </button>
