@@ -39,56 +39,62 @@ class App extends React.Component {
       return Math.floor(Math.random() * 6) + 1;
     };
 
-    this.updateMessage = () => {
-      if (this.state.playerHealth <= 0 || this.state.monsterHealth <= 0) {
-        this.state.playerHealth <= 0
+    this.updateMessage = (
+      playerHit,
+      monsterHit,
+      playerHealth,
+      monsterHealth
+    ) => {
+      if (playerHealth <= 0 || monsterHealth <= 0) {
+        playerHealth <= 0
           ? this.setState({ end: true, message: "GAME OVER" })
           : this.setState({ end: true, message: "YOU WIN" });
       } else {
-        this.state.monsterHit > this.state.playerHit
+        monsterHit > playerHit
           ? this.setState({
-              message: `Monster hit you by ${this.state.monsterHit -
-                this.state.playerHit}`
+              message: `Monster hit you by ${monsterHit - playerHit}`
             })
-          : this.state.monsterHit < this.state.playerHit
+          : monsterHit < playerHit
           ? this.setState({
-              message: `You hit monster by ${this.state.playerHit -
-                this.state.monsterHit}`
+              message: `You hit monster by ${playerHit - monsterHit}`
             })
           : this.setState({ message: "Draw" });
       }
     };
 
-    this.updateHealth = () => {
-      this.state.monsterHit >= this.state.playerHit
+    this.updateHealth = (playerHit, monsterHit) => {
+      monsterHit >= playerHit
         ? this.setState({
-            playerHealth:
-              this.state.playerHealth -
-              (this.state.monsterHit - this.state.playerHit)
+            playerHealth: this.state.playerHealth - (monsterHit - playerHit)
           })
         : this.setState({
-            monsterHealth:
-              this.state.monsterHealth -
-              (this.state.playerHit - this.state.monsterHit)
+            monsterHealth: this.state.monsterHealth - (playerHit - monsterHit)
           });
-      this.updateMessage();
+      const playerHealth = this.state.playerHealth - (monsterHit - playerHit);
+      const monsterHealth = this.state.monsterHealth - (playerHit - monsterHit);
+
+      this.updateMessage(playerHit, monsterHit, playerHealth, monsterHealth);
     };
 
-    this.calculateHit = () => {
+    this.calculateHit = (dicePlayer, diceMonster) => {
+      const playerHit = dicePlayer.reduce((a, b) => a + b);
+      const monsterHit = diceMonster.reduce((a, b) => a + b);
       this.setState({
-        playerHit: this.state.playerDice.reduce((a, b) => a + b),
-        monsterHit: this.state.monsterDice.reduce((a, b) => a + b)
+        playerHit: playerHit,
+        monsterHit: monsterHit
       });
-      this.updateHealth();
+      this.updateHealth(playerHit, monsterHit);
     };
 
     this.rollDice = () => {
+      const rollDicePlayer = [this.randomDice(), this.randomDice()];
+      const rollDiceMonster = [this.randomDice(), this.randomDice()];
       this.setState({
         start: false,
-        playerDice: [this.randomDice(), this.randomDice()],
-        monsterDice: [this.randomDice(), this.randomDice()]
+        playerDice: rollDicePlayer,
+        monsterDice: rollDiceMonster
       });
-      this.calculateHit();
+      this.calculateHit(rollDicePlayer, rollDiceMonster);
     };
   }
 
